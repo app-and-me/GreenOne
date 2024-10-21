@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:greenone/pages/CalendarPage.dart';
-import 'package:greenone/pages/HomePage.dart';
-import 'package:greenone/pages/LoginPage.dart';
+import 'package:greenone/pages/main/CalendarPage.dart';
+import 'package:greenone/pages/main/HomePage.dart';
+import 'package:greenone/pages/main/LoginPage.dart';
 import 'package:greenone/pages/MainPage.dart';
-import 'package:greenone/pages/ProfilePage.dart';
+import 'package:greenone/pages/main/MessageListPage.dart';
+import 'package:greenone/pages/main/ProfilePage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,8 @@ class _MainAppState extends State {
         GetPage(name: '/calendar', page: () => const CalendarPage()),
         GetPage(name: '/home', page: () => const HomePage()),
         GetPage(name: '/profile', page: () => const ProfilePage()),
-        GetPage(name: '/login', page: () => const LoginPage())
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/message-list', page: () => const MessageListPage()),
       ],
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
