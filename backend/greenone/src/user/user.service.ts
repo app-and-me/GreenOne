@@ -16,10 +16,12 @@ export class UserService {
   async create(createUserDto: CreateUserDto) {
     try {
       const user: User = {
-        ...createUserDto,
         lastPostDate: null,
       };
-      const id = await this.userRepository.create(user);
+      const id = await this.userRepository.createById(
+        user,
+        createUserDto.userId,
+      );
       return this.responseStrategy.success('User created successfully', {
         id,
         ...user,
