@@ -1,34 +1,35 @@
-import { Controller, Param, Body, Put, Get, Delete } from '@nestjs/common';
+import { Controller, Param, Body, Put, Get, Delete, Req } from '@nestjs/common';
 import { PostDateService } from './post-date.service';
 
-@Controller('api/post-date/:userId')
+@Controller('api/post-date/')
 export class PostDateController {
   constructor(private readonly postDateService: PostDateService) {}
 
   @Put(':date')
   async setDate(
-    @Param('userId') userId: string,
+    @Req() req: Request,
     @Param('date') date: string,
     @Body('value') value: boolean,
   ) {
-    return this.postDateService.setDate(userId, date, value);
+    const user = req['user'];
+    return this.postDateService.setDate(user.user_id, date, value);
   }
 
   @Get(':date')
-  async getDate(@Param('userId') userId: string, @Param('date') date: string) {
-    return this.postDateService.getDate(userId, date);
+  async getDate(@Req() req: Request, @Param('date') date: string) {
+    const user = req['user'];
+    return this.postDateService.getDate(user.user_id, date);
   }
 
   @Get()
-  async getAllDates(@Param('userId') userId: string) {
-    return this.postDateService.getAllDates(userId);
+  async getAllDates(@Req() req: Request) {
+    const user = req['user'];
+    return this.postDateService.getAllDates(user.user_id);
   }
 
   @Delete(':date')
-  async deleteDate(
-    @Param('userId') userId: string,
-    @Param('date') date: string,
-  ) {
-    return this.postDateService.deleteDate(userId, date);
+  async deleteDate(@Req() req: Request, @Param('date') date: string) {
+    const user = req['user'];
+    return this.postDateService.deleteDate(user.user_id, date);
   }
 }

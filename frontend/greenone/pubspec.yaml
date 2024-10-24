@@ -7,13 +7,22 @@ environment:
   sdk: ^3.5.1
 
 dependencies:
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   flutter_dotenv: ^5.2.1
   flutter_svg: ^2.0.10+1
   get: ^4.6.6
   google_fonts: ^6.2.1
+  google_sign_in: ^6.2.1
   http: ^1.2.2
+  table_calendar: ^3.1.2
+  cloud_firestore: ^5.4.4
+  image_picker: ^1.1.2
+  firebase_storage: ^12.3.4
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +34,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/characters/
+    - assets/config/.env
   fonts:
     - family: Pretendard
       fonts:

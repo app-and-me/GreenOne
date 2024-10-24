@@ -24,6 +24,7 @@ export class PetService {
 
       const Pet: Pet = {
         age: 1,
+        percent: 0,
       };
 
       const id = await this.PetRepository.createById(

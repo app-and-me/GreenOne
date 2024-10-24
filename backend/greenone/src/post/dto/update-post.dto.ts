@@ -11,4 +11,7 @@ export class UpdatePostDto extends PartialType(CreatePostDto) {
 
   @IsString()
   imageUrl: string;
+
+  @IsString()
+  title: string;
 }

@@ -24,6 +24,7 @@ export class FirebaseService implements OnModuleInit {
 
     this.defaultApp = admin.initializeApp({
       credential: admin.credential.cert(resolvedPath),
+      storageBucket: 'greenone-720b2.appspot.com',
     });
   }
 

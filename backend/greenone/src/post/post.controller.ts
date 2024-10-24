@@ -6,18 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostService } from './post.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('api/post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postService.create(createPostDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @UploadedFile() image: Express.Multer.File,
+    @Body() createPostDto: CreatePostDto,
+  ) {
+    const imageUrl = await this.postService.uploadImage(image);
+    return await this.postService.create(imageUrl, createPostDto);
   }
 
   @Get()

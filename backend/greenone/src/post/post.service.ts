@@ -5,6 +5,9 @@ import { Post } from './entities/post.entity';
 import { ResponseStrategy } from '../shared/strategies/response.strategy';
 import { AppRepository } from 'src/app.repository';
 import { UserService } from 'src/user/user.service';
+import * as admin from 'firebase-admin';
+import { ChatGptService } from 'src/chat-gpt/chat-gpt.service';
+import { PetService } from 'src/pet/pet.service';
 
 @Injectable()
 export class PostService {
@@ -13,9 +16,21 @@ export class PostService {
     private postRepository: AppRepository<Post>,
     private responseStrategy: ResponseStrategy,
     private readonly userService: UserService,
+    private readonly gptService: ChatGptService,
+    private readonly petService: PetService,
   ) {}
 
-  async create(createPostDto: CreatePostDto) {
+  async uploadImage(file: Express.Multer.File): Promise<string> {
+    const bucket = admin.storage().bucket();
+    const fileName = Date.now() + '-' + file.originalname;
+    const fileUpload = bucket.file(fileName);
+    await fileUpload.save(file.buffer, {
+      metadata: { contentType: file.mimetype },
+    });
+    return `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+  }
+
+  async create(imageUrl: string, createPostDto: CreatePostDto) {
     try {
       const user = await this.userService.findOne(createPostDto.authorId);
       if (user.status === 404) {
@@ -23,9 +38,34 @@ export class PostService {
       }
       const post: Post = {
         ...createPostDto,
+        imageUrl,
         createdAt: new Date(),
       };
       const id = await this.postRepository.create(post);
+      const verified = await this.gptService.verifyImage(
+        imageUrl,
+        createPostDto.title,
+      );
+
+      const pet = await this.petService.findOne(createPostDto.authorId);
+
+      if (pet['data']['percent'] + (verified ? 14 : 10) >= 100) {
+        this.petService.update(createPostDto.authorId, {
+          age: pet['data']['age'] + 1,
+          percent: 0,
+        });
+      } else {
+        this.petService.update(createPostDto.authorId, {
+          age: pet['data']['age'],
+          percent: pet['data']['percent'] + (verified ? 14 : 10),
+        });
+      }
+
+      this.userService.update(createPostDto.authorId, {
+        lastPostDate: post.createdAt,
+        umbrage: user['data']['umbrage'] + (verified ? 7 : 5),
+      });
+
       return this.responseStrategy.success('Post created successfully', {
         id,
         ...post,
