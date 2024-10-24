@@ -8,5 +8,5 @@ export class CreatePostDto {
   content: string;
 
   @IsString()
-  imageUrl: string;
+  title: string;
 }

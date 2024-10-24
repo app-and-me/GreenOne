@@ -4,4 +4,5 @@ export class Post {
   content: string;
   createdAt: Date;
   imageUrl: string;
+  title: string;
 }

@@ -13,38 +13,42 @@ class MyBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      child: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.all(16.0), 
-          decoration: BoxDecoration(
-            color: const Color(0xFF333333),
-            borderRadius: BorderRadius.circular(95),
+    return Stack(
+      children: [
+        Positioned(
+          child: SafeArea(
+            child: Container(
+              margin: const EdgeInsets.all(16.0), 
+              decoration: BoxDecoration(
+                color: const Color(0xFF333333),
+                borderRadius: BorderRadius.circular(95),
+              ),
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(
+                    iconPath: 'assets/icons/home.svg',
+                    index: 0,
+                  ),
+                  _buildNavItem(
+                    iconPath: 'assets/icons/calendar.svg',
+                    index: 1,
+                  ),
+                  _buildNavItem(
+                    iconPath: 'assets/icons/list.svg',
+                    index: 2,
+                  ),
+                  _buildNavItem(
+                    iconPath: 'assets/icons/profile.svg',
+                    index: 3,
+                  ),
+                ],
+              ),
+            ),
           ),
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(
-                iconPath: 'assets/icons/home.svg',
-                index: 0,
-              ),
-              _buildNavItem(
-                iconPath: 'assets/icons/calendar.svg',
-                index: 1,
-              ),
-              _buildNavItem(
-                iconPath: 'assets/icons/list.svg',
-                index: 2,
-              ),
-              _buildNavItem(
-                iconPath: 'assets/icons/profile.svg',
-                index: 3,
-              ),
-            ],
-          ),
-        ),
-      ),
+        )
+      ],
     );
   }
 

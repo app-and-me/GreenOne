@@ -27,18 +27,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffEDEEF1),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: MyAppBar(
-          onNotificationPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NotificationPage()),
-            );
-          },
-        ),
-      ),
+      backgroundColor: const Color(0xFFF8FAED),
       body: pages[_currentIndex],
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: _currentIndex,

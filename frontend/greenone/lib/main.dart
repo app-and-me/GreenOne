@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:greenone/firebase_options.dart';
 import 'package:greenone/pages/main/CalendarPage.dart';
 import 'package:greenone/pages/main/HomePage.dart';
 import 'package:greenone/pages/main/LoginPage.dart';
@@ -9,6 +14,8 @@ import 'package:greenone/pages/main/ProfilePage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: 'assets/config/.env');
 
   runApp(const MainApp());
 }
@@ -33,8 +40,17 @@ class _MainAppState extends State {
         GetPage(name: '/login', page: () => const LoginPage()),
         GetPage(name: '/message-list', page: () => const MessageListPage()),
       ],
-      initialRoute: '/',
+      initialRoute: FirebaseAuth.instance.currentUser == null ? '/login' : '/',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+      ],
+      locale: const Locale('ko'),
     );
   }
 }

@@ -13,33 +13,42 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xffEDEEF1),
+      backgroundColor: const Color(0xffF8FAED),
       scrolledUnderElevation: 0,
+      titleSpacing: 0,
       title: Column(
         children: [
           Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'GreenOne',
-              style: GoogleFonts.ptSans(
-                color: const Color(0xFF01C674),
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Text(
+                'GreenOne',
+                style: GoogleFonts.ptSans(
+                  color: const Color(0xFF01C674),
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
       actions: [
-        IconButton(
-          icon: SvgPicture.asset(
-            'assets/icons/notifications.svg',
-            width: 22.12,
-            height: 24.73,
+        Padding(
+          padding: const EdgeInsets.only(right: 28.03),
+          child: IconButton(
+            padding: EdgeInsets.zero, 
+            icon: SvgPicture.asset(
+              'assets/icons/notifications.svg',
+              width: 22.42,
+              height: 24.73,
+            ),
+            onPressed: onNotificationPressed,
           ),
-          onPressed: onNotificationPressed,
         ),
       ],
     );
   }
 }
+

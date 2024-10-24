@@ -17,6 +17,7 @@ export class UserService {
     try {
       const user: User = {
         lastPostDate: null,
+        umbrage: 0,
       };
       const id = await this.userRepository.createById(
         user,

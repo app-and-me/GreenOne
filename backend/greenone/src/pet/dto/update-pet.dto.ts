@@ -5,4 +5,7 @@ import { IsNumber } from 'class-validator';
 export class UpdatePetDto extends PartialType(CreatePetDto) {
   @IsNumber()
   age: number;
+
+  @IsNumber()
+  percent: number;
 }
